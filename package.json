@@ -1,0 +1,65 @@
+{
+  "name": "claude-animated-shorts",
+  "version": "1.0.0",
+  "description": "Three.js + Remotion animated shorts pipeline",
+  "type": "module",
+  "scripts": {
+    "build": "remotion build",
+    "render": "remotion render",
+    "render:dev": "remotion render --concurrency=1 --gl=egl --chrome-args=\"--disable-dev-shm-usage --no-sandbox --use-gl=egl --enable-gpu-rasterization\" --input-props='{\"dev\":true}'",
+    "render:720p": "remotion render --concurrency=1 --gl=egl --chrome-args=\"--disable-dev-shm-usage --no-sandbox --use-gl=egl --enable-gpu-rasterization\"",
+    "render:720p:dev": "remotion render --concurrency=1 --gl=egl --chrome-args=\"--disable-dev-shm-usage --no-sandbox --use-gl=egl --enable-gpu-rasterization\" --input-props='{\"dev\":true}'",
+    "still": "remotion still",
+    "still:dev": "remotion still --concurrency=1 --gl=egl --chrome-args=\"--disable-dev-shm-usage --no-sandbox --use-gl=egl --enable-gpu-rasterization\" --input-props='{\"dev\":true}'",
+    "preview": "remotion preview",
+    "studio": "remotion studio",
+    "clean:tmp": "node scripts/clean-tmp.js"
+  },
+  "dependencies": {
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "three": "^0.165.0",
+    "@react-three/fiber": "^8.16.8",
+    "@react-three/drei": "^9.108.3",
+    "@react-three/postprocessing": "^2.16.2",
+    "three-stdlib": "^2.30.4",
+    "postprocessing": "^6.36.0",
+    "remotion": "4.0.544",
+    "@remotion/cli": "4.0.544",
+    "@remotion/renderer": "4.0.544",
+    "@remotion/player": "4.0.544",
+    "@remotion/three": "4.0.544",
+    "zod": "4.6.7"
+  },
+  "devDependencies": {
+    "typescript": "^5.5.4",
+    "@types/react": "^18.3.3",
+    "@types/react-dom": "^18.3.0",
+    "@types/three": "^0.165.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "remotion": {
+    "compositions": [
+      {
+        "id": "BridgeShort",
+        "entryPoint": "src/bridge/Bridge.tsx",
+        "component": "BridgeShort",
+        "width": 720,
+        "height": 1280,
+        "frameRate": 30,
+        "durationInFrames": 2025
+      },
+      {
+        "id": "SubaruShort",
+        "entryPoint": "src/subaru/Subaru.tsx",
+        "component": "SubaruShort",
+        "width": 720,
+        "height": 1280,
+        "frameRate": 30,
+        "durationInFrames": 1800
+      }
+    ]
+  }
+}
