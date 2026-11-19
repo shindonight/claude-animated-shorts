@@ -24,7 +24,7 @@ async def generate_voice_tts():
 
     voice = "pt-BR-AntonioNeural"
     rate = "+10%"  # ~4.0 palavras/segundo
-    volume = "+2dB"
+    volume = "+2%"
 
     communicate = edge_tts.Communicate(SCRIPT_PT_BR, voice, rate=rate, volume=volume)
     output_path = OUTPUT_DIR / "voice.mp3"
