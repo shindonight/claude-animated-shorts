@@ -68,7 +68,7 @@ const Inner: React.FC<{ id: number; kit: Kit }> = ({ id, kit }) => {
     grade: new GradeEffect(GRADES.day, GRADE_STRENGTH.day),
     grain: new GrainEffect({ amount: 0.025, cellPx: 1.5 }),
   }), [camera, scene]);
-  useEffect(() => () => fx.ink.dispose(), [fx]);
+  useEffect(() => () => { if (fx.ink && typeof fx.ink.dispose === 'function') fx.ink.dispose(); }, [fx]);
 
   const post = useMemo(() => {
     const passes = [];

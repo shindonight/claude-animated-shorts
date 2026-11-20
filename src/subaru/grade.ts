@@ -27,15 +27,15 @@ class GradePass extends Effect {
       uniform sampler2D tDiffuse;
       uniform vec3 uLift, uGamma, uGain;
       uniform float uSat, uStrength;
-      varying vec2 vUv;
-      void main() {
-        vec3 col = texture2D(tDiffuse, vUv).rgb;
+      void mainImage(out vec4 fragColor, in vec2 fragCoord) {
+        vec2 uv = fragCoord;
+        vec3 col = texture2D(tDiffuse, uv).rgb;
         col = col + uLift * uStrength;
         col = pow(col, uGamma * uStrength + vec3(1.0) * (1.0 - uStrength));
         col = col * uGain * uStrength + col * (1.0 - uStrength);
         float gray = dot(col, vec3(0.299, 0.587, 0.114));
         col = mix(vec3(gray), col, uSat * uStrength + (1.0 - uStrength));
-        gl_FragColor = vec4(col, 1.0);
+        fragColor = vec4(col, 1.0);
       }
     `;
 

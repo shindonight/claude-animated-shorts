@@ -325,7 +325,7 @@ def synthesize_sfx(duration_sec=60, sr=48000):
         t = np.arange(dur) / sr
         liquid = np.random.randn(dur) * 0.1
         from scipy import signal
-        b, a = signal.butter(2, [200, 2000]/(sr/2), btype='bandpass')
+        b, a = signal.butter(2, np.array([200, 2000])/(sr/2), btype='bandpass')
         liquid = signal.filtfilt(b, a, liquid)
         steam = np.random.randn(dur) * np.exp(-t / 1.5) * 0.05
         b, a = signal.butter(2, 4000/(sr/2), btype='highpass')
@@ -363,7 +363,7 @@ def synthesize_sfx(duration_sec=60, sr=48000):
         t = np.arange(dur) / sr
         murmur = np.random.randn(dur) * 0.008
         from scipy import signal
-        b, a = signal.butter(2, [200, 2000]/(sr/2), btype='bandpass')
+        b, a = signal.butter(2, np.array([200, 2000])/(sr/2), btype='bandpass')
         return signal.filtfilt(b, a, murmur)
 
     # --- Timeline de SFX (frames convertidos para segundos @ 30fps) ---
@@ -453,10 +453,12 @@ def mix_final(voice_wav, music_wav, sfx_wav, output_wav):
 
     # Match lengths
     max_len = max(len(voice), len(music), len(sfx))
-    for arr in [voice, music, sfx]:
-        if len(arr) < max_len:
-            pad = np.zeros((max_len - len(arr), 2), dtype=np.float32)
-            arr = np.vstack([arr, pad])
+    if len(voice) < max_len:
+        voice = np.vstack([voice, np.zeros((max_len - len(voice), 2), dtype=np.float32)])
+    if len(music) < max_len:
+        music = np.vstack([music, np.zeros((max_len - len(music), 2), dtype=np.float32)])
+    if len(sfx) < max_len:
+        sfx = np.vstack([sfx, np.zeros((max_len - len(sfx), 2), dtype=np.float32)])
 
     # Ducking gains
     voice_gain = 1.0      # 0 dB
